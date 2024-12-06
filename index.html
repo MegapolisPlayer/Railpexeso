@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Railpexeso</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <meta name="author" content="Martin/MegapolisPlayer">
+        <link rel="stylesheet" href="./systems/canvas.css">
+    </head>
+    <body>
+        <h1>Railway pexeso</h1>
+        <p>
+            Score: <span id="score">0</span>
+            <button onclick="resetGame()">Reset game</button>
+            <button onclick="makeFullscreen()">Fullscreen</button>
+            <br>
+            Settings:
+            <br>
+            X Position: <input id="xpexeso" type="number" min="2" max="10" step="1" value="5">
+            Y Position: <input id="ypexeso" type="number" min="2" max="10" step="1" value="5">
+            <br>
+            Settings will be applied on next reset of game.
+        </p>
+
+        <canvas id="field" class="fullscreen-canvas"></canvas>
+
+        <h3>Sources</h3>
+        <p>
+            Locomotive photos: Wikimedia
+            <table id="sources">
+                <tr>
+                    <th>Type</th>
+                    <th>Author</th>
+                    <th>License</th>
+                </tr>
+            </table>
+        </p>
+
+        <script src="./systems/imageLoader.js"></script>
+        <script src="./systems/main.js"></script>
+    </body>
+</html>
