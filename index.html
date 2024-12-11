@@ -1,42 +1,57 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Railpexeso</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta charset="UTF-8">
-        <meta name="author" content="Martin/MegapolisPlayer">
-        <link rel="stylesheet" href="./systems/canvas.css">
-    </head>
-    <body>
-        <h1>Railway pexeso</h1>
-        <p>
-            Score: <span id="score">0</span>
-            <button onclick="resetGame()">Reset game</button>
-            <button onclick="makeFullscreen()">Fullscreen</button>
-            <br>
-            Settings:
-            <br>
-            X Position: <input id="xpexeso" type="number" min="2" max="10" step="1" value="5">
-            Y Position: <input id="ypexeso" type="number" min="2" max="10" step="1" value="5">
-            <br>
-            Settings will be applied on next reset of game.
-        </p>
+	<head>
+		<title>Railpexeso</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="UTF-8">
+		<meta name="author" content="Martin/MegapolisPlayer">
+		<link rel="stylesheet" href="./systems/canvas.css">
+		<link rel="icon" href="./assets/icon.png">
+	</head>
+	<body>
+		<h1>Railpexeso</h1>
+		<h2>a pexeso with <em>trains!</em></h2>
+		<h3>
+			Put together in an evening. (c) Martin Bykov 2024
+			<br>
+			<a href="https://github.com/MegapolisPlayer/Railpexeso">Github</a> | <a href="https://megapolisplayer.github.io/">Website</a>
+		</h3>
+		<p>
+			Score (pairs collected): <strong><span id="score">0</span> in <span id="moves">0</span> moves</strong>
+			<br>
+			Highscore for this session: <strong><span id="highmoves">0</span> moves</strong>
+			<br>
+			<button onclick="reset()">Reset game</button>
+			<button onclick="makeFullscreen()">Fullscreen</button>
+			<button onclick="resetHigh()">Reset highscore</button>
+			<br>
+			<strong>Settings:</strong>
+			<br>
+			X size: <input id="xpexeso" type="number" min="2" max="10" step="1" value="5">
+			Y size: <input id="ypexeso" type="number" min="2" max="10" step="1" value="5">
+			Amount for match: <input id="matchamount" type="number" min="2" max="4" step="1" value="2">
+			<br>
+			Settings will be applied on next reset of game.
+		</p>
 
-        <canvas id="field" class="fullscreen-canvas"></canvas>
+		<div class="warning" id="warningPlace" style="display: none;"></div>
 
-        <h3>Sources</h3>
-        <p>
-            Locomotive photos: Wikimedia
-            <table id="sources">
-                <tr>
-                    <th>Type</th>
-                    <th>Author</th>
-                    <th>License</th>
-                </tr>
-            </table>
-        </p>
+		<canvas id="field"></canvas>
 
-        <script src="./systems/imageLoader.js"></script>
-        <script src="./systems/main.js"></script>
-    </body>
+		<h3>Sources</h3>
+		<p>
+			Locomotive photos: Wikimedia Commons<br>
+			Colors: <a href="https://cd.brandcloud.pro/document/47790/104659">Official ČD website</a><br>
+			<table id="sources">
+				<tr>
+					<th>Train type</th>
+					<th>Photo author</th>
+					<th>License</th>
+				</tr>
+			</table>
+		</p>
+
+		<script src="./systems/imageLoader.js"></script>
+		<script src="./systems/main.js"></script>
+	</body>
 </html>

@@ -2,10 +2,53 @@ html, body {
     width: 100%;
     height: 100%;
     margin: 0;
+    font-family: sans-serif;
+    background-color: #002664;
+    color: #ffffff;
+    text-align: center;
 }
 
 .fullscreen-canvas {
     object-fit: contain;
     width: 100vw;
     height: 100vh;
+}
+
+button {
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+    background-color: #009FDA;
+    color: #ffffff;
+    padding: 20px;
+    font-weight: bold;
+}
+
+input {
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+    background-color: #009FDA;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+table {
+    margin: auto;
+}
+
+a {
+    color: #ffffff;
+}
+a:active {
+    color: #009FDA;
+}
+a:hover {
+    color: #BABDBA;
+}
+
+.warning {
+    border-radius: 30px;
+    color: #ffffff;
+    background-color: #ff0000;
+    padding: 20px;
+    font-weight: bold;
 }
