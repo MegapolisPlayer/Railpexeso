@@ -13,7 +13,8 @@ let renderState = {
 	railbg: null,
 	cardSizeX: 100,
 	cardSizeY: 100,
-	isFullscreen: false
+	isFullscreen: false,
+	canClick: false //to prevent clicking while loading
 };
  
 let gameState = {
@@ -41,10 +42,10 @@ let imageSources = [
 	new ImageInfo("PKPIC SU160", "pkp/su160.jpg", "Lichen99", "CC-BY-SA 3.0"),
 	new ImageInfo("PKPIC ED250", "pkp/ed250.jpg", "Jakub Halun", "CC-BY-SA 4.0"),
 	new ImageInfo("PKPIC ED161", "pkp/ed161.jpg", "Jakub Murat", "CC-BY-SA 4.0"),
-	new ImageInfo("KD 31WE", "pkp/31we.jpg", "Marcin Szala", "CC-BY-SA 4.0"),
+	new ImageInfo("KD Impuls", "pkp/31we.jpg", "Marcin Szala", "CC-BY-SA 4.0"),
 	new ImageInfo("PKPIC EU07", "pkp/eu07.jpg", "Mateusz Wlodarczyk", "CC-BY-SA 4.0"),
 	new ImageInfo("PKPIC EP09", "pkp/ep09.jpg", "Muri", "CC-BY-SA 4.0"),
-	new ImageInfo("PKPIC E4DCUd", "pkp/e4dcu.jpg", "Ryszard Rusak", "CC-BY-SA 2.0"),
+	new ImageInfo("PKPIC Griffin", "pkp/e4dcu.jpg", "Ryszard Rusak", "CC-BY-SA 2.0"),
 	new ImageInfo("PKPC ET22", "pkp/et22.jpg", "Akjam-Sen", "CC-BY-SA 4.0"),
 	new ImageInfo("PKP Ty2", "pkp/ty2.jpg", "Radoslaw Kolodziej", "CC-BY-SA 3.0"),
 	new ImageInfo("PKPIC SM42", "pkp/sm42.jpg", "Radoslaw Kolodziej", "CC-BY-SA 2.5"),
@@ -56,7 +57,7 @@ let imageSources = [
 	new ImageInfo("ČD Laminátka", "cd/240.jpg", "Йиржи", "CC0"),
 	new ImageInfo("ČD Eso", "cd/363.jpg", "Mö1997", "CC-BY-SA 4.0"),
 	new ImageInfo("ČD Taurus", "cd/1216.jpg", "PetrS.", "CC-BY-SA 4.0"),
-	new ImageInfo("ČD Traxx", "cd/traxx.jpg", "ČD Cargo", "CC-BY-SA 4.0"),
+	new ImageInfo("ČDC Traxx", "cd/traxx.jpg", "ČD Cargo", "CC-BY-SA 4.0"),
 	new ImageInfo("ČD Bardotka", "cd/751.jpg", "Rainerhaufe", "CC-BY-SA 3.0"),
 	new ImageInfo("ČD Banán/150", "cd/150.jpg", "Rainerhaufe", "CC-BY-SA 4.0")
 ];
@@ -200,6 +201,7 @@ async function animatedAppear(front, xpos, ypos, imageId) {
 let listenerActive = false;
 
 async function onclickListener(event) {
+	if(!renderState.canClick) return;
 	if(listenerActive) return;
 	listenerActive = true;
 
@@ -297,11 +299,35 @@ async function onclickListener(event) {
 async function init() {
 	console.log("Initializing...");
 
-	//handle highscore resets
+	//clear old warning(s)
+
+	let warning = document.getElementById("warningPlace");
+	warning.innerHTML = "";
+	warning.style.display = "none";
 
 	let newxsize = Number(document.getElementById("xpexeso").value);
+	if(newxsize < 2) {
+		newxsize = 2;
+		document.getElementById("xpexeso").value = 2;
+		warning.style.display = "block";
+		warning.innerHTML += "Warning! X size too small (minimal value is 2)<br>";
+	}
 	let newysize = Number(document.getElementById("ypexeso").value);
+	if(newysize < 2) {
+		newysize = 2;
+		document.getElementById("ypexeso").value = 2;
+		warning.style.display = "block";
+		warning.innerHTML += "Warning! Y size too small (minimal value is 2)<br>";
+	}
 	let newformatch = Number(document.getElementById("matchamount").value);
+	if(newformatch < 2) {
+		newformatch = 2;
+		document.getElementById("matchamount").value = 2;
+		warning.style.display = "block";
+		warning.innerHTML += "Warning! Minimum 2 cards are required for matching.<br>";
+	}
+
+	//handle highscore resets
 
 	if(
 		renderState.amountX != newxsize || 
@@ -351,9 +377,12 @@ async function init() {
 
 	renderState.amount = renderState.amountX * renderState.amountY;
 
-	let warning = document.getElementById("warningPlace");
-	warning.innerHTML = ""; //clear old warning(s)
-	warning.style.display = "none";
+	if(renderState.forMatch > renderState.amount) {
+		renderState.forMatch = 2;
+		document.getElementById("matchamount").value = 2;
+		warning.style.display = "block";
+		warning.innerHTML += "Warning! Amount pairs to match larger than amount of cards, setting to 2.<br>";
+	}
 	
 	if(renderState.amount > imageSources.length*renderState.forMatch) {
 		//make square
@@ -362,9 +391,9 @@ async function init() {
 		renderState.amount = renderState.amountX*renderState.amountY;
 
 		warning.style.display = "block";
-		warning.innerHTML = 
+		warning.innerHTML += 
 			"Warning! Size of field larger than amount of cards. "+
-			"Size has been reduced to "+renderState.amountX+" by "+renderState.amountY+" to avoid repetition.\n";
+			"Size has been reduced to "+renderState.amountX+" by "+renderState.amountY+" to avoid repetition.<br>";
 	}
 
 	renderState.cardSizeX = renderState.canvas.width/renderState.amountX;
@@ -376,7 +405,7 @@ async function init() {
 		renderState.amount -= equalizer;
 		warning.style.display = "block";
 		warning.innerHTML += 
-			"Warning! "+equalizer+" extra card"+(equalizer>1?"s":"")+" removed to make pexeso pairs match up correctly!"
+			"Warning! "+equalizer+" extra card"+(equalizer>1?"s":"")+" removed to make pexeso pairs match up correctly!<br>"
 		;
 	}
 
@@ -447,12 +476,13 @@ async function init() {
 		drawCardBack(i % renderState.amountY, Math.trunc(i / renderState.amountX));
 	}
 
-	console.log("Done!");
+	console.log("Done! Clicking is now allowed.");
+	renderState.canClick = true;
 }
 
 async function reset() {
 	document.getElementById("score").innerHTML = 0;
-	init();
+	await init();
 }
 
 init();
