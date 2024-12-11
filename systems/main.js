@@ -411,14 +411,17 @@ async function init() {
 
 	renderState.context.font = "bold "+ (renderState.context.height/10)/renderState.amountY +"px sans-serif";
 
-	renderState.railbg = await loadImage(
-		new ImageInfo("Background", "railbg.jpg", "Dietmar Rabich", "CC-BY-SA 4.0"),
-		parentElementMinSize, parentElementMinSize //size overrides
-	);
+	if(!renderState.canClick) {
+		//avoid reloading images
+		renderState.railbg = await loadImage(
+			new ImageInfo("Background", "railbg.jpg", "Dietmar Rabich", "CC-BY-SA 4.0"),
+			parentElementMinSize, parentElementMinSize //size overrides
+		);
 
-	//cannot use forEach since it uses callback (and it is a pain with promises)
-	for(let i = 0; i < imageSources.length; i++) {
-		loadedImages.push(await loadImage(imageSources[i]));
+		//cannot use forEach since it uses callback (and it is a pain with promises)
+		for(let i = 0; i < imageSources.length; i++) {
+			loadedImages.push(await loadImage(imageSources[i]));
+		}
 	}
 
 	//setup game state
