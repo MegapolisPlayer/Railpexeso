@@ -53,13 +53,13 @@ let imageSources = [
 	new ImageInfo("ČD 680", "cd/680.jpg", "Honza Groh", "CC-BY-SA 3.0"),
 	new ImageInfo("ČD InterPanter", "cd/660.jpg", "Khlok235", "CC-BY-SA 4.0"),
 	new ImageInfo("ČD 810", "cd/810.jpg", "Vít Javůrek", "CC0"),
-	new ImageInfo("ČD RegioFox", "cd/844.jpg", "PetrS.", "CC-BY-SA 3.0"),
+	new ImageInfo("ČD RegioShark", "cd/844.jpg", "PetrS.", "CC-BY-SA 3.0"),
 	new ImageInfo("ČD Laminátka", "cd/240.jpg", "Йиржи", "CC0"),
 	new ImageInfo("ČD Eso", "cd/363.jpg", "Mö1997", "CC-BY-SA 4.0"),
 	new ImageInfo("ČD Taurus", "cd/1216.jpg", "PetrS.", "CC-BY-SA 4.0"),
 	new ImageInfo("ČDC Traxx", "cd/traxx.jpg", "ČD Cargo", "CC-BY-SA 4.0"),
 	new ImageInfo("ČD Bardotka", "cd/751.jpg", "Rainerhaufe", "CC-BY-SA 3.0"),
-	new ImageInfo("ČD Banán/150", "cd/150.jpg", "Rainerhaufe", "CC-BY-SA 4.0")
+	new ImageInfo("ČD Krysa/150", "cd/150.jpg", "Rainerhaufe", "CC-BY-SA 4.0")
 ];
 
 //we take names from image sources, not from loaded images
